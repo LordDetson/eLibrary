@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0">
+    <application>
+        <resource-handler>org.omnifaces.resourcehandler.UnmappedResourceHandler</resource-handler>
+        <locale-config>
+            <default-locale>en_US</default-locale>
+            <supported-locale>en_US</supported-locale>
+            <supported-locale>ru_RU</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>by.babanin.nls.LoginContent</base-name>
+            <var>logonContent</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>by.babanin.nls.MainContent</base-name>
+            <var>mainContent</var>
+        </resource-bundle>
+
+    </application>
+
+    <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>books</from-outcome>
+            <to-view-id>/pages/main.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/main.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>exit</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>

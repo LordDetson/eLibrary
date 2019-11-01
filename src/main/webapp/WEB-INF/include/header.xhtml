@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition>
+    <nav class="navbar navbar-dark bg-dark fixed-top navbar-expand-md px-0">
+        <a class="navbar-brand col-2 mr-0" href="#">eLibrary.by</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <h:form style="width: 100%">
+                <div class="form-row">
+                    <div class="col-md">
+                        <h:inputText id="search_value"
+                                     styleClass="form-control m-2 ml-md-0 mr-md-3 my-md-0" value="#{searchController.pattern}"/>
+                    </div>
+                    <div class="col-md-2">
+                        <h:selectOneMenu value="#{searchController.currentSearchType}"
+                                         styleClass="custom-select m-2 ml-md-0 mr-md-3 my-md-0">
+                            <f:selectItems value="#{searchController.getSearchTypeMap()}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="col-md-1">
+                        <h:commandButton action="#{searchController.fillBooksByPattern()}"
+                                         styleClass="btn btn-outline-info m-2 ml-md-0 mr-md-3 my-md-0"
+                                         value="#{mainContent['form.search.buttonText']}"/>
+                    </div>
+                </div>
+            </h:form>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle m-2 m-md-0" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#{user.username}</a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <h:form>
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <h:commandLink action="#{loginController.logout()}" styleClass="dropdown-item"
+                                           value="#{mainContent['profile.logout']}"/>
+                        </h:form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</ui:composition>
+</html>

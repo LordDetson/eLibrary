@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">
+                #{searchController.currentSearch}
+            </h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group mr-2">
+                    <a class="btn btn-sm btn-outline-secondary">Share</a>
+                    <a class="btn btn-sm btn-outline-secondary">Export</a>
+                </div>
+                <a class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                    This week
+                </a>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h:form>
+                <nav class="nav nav-pills justify-content-center">
+                    <ui:repeat value="#{symbolsController.getCharsRu()}" var="char">
+                        <h:commandLink action="#{searchController.fillBooksByFirstSymbol()}" value="#{char}"
+                                       styleClass="nav-link #{searchController.currentSearch == char ? 'active':''}">
+                            <f:param name="search_symbol" value="#{char}"/>
+                        </h:commandLink>
+                    </ui:repeat>
+                </nav>
+            </h:form>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <p><strong>#{mainContent['book.count']}: #{searchController.getTotalBooksCount()}</strong></p>
+                </div>
+                <div class="col">
+                    <h:form rendered="#{searchController.getTotalBooksCount() > searchController.booksOnPage}"
+                            style="width: 100%">
+                        <nav aria-label="Page navigation by books">
+                            <ul class="pagination justify-content-end">
+                                <li class="page-item #{searchController.selectedPageNumber - 1 == 0 ? 'disabled' : ''}">
+                                    <h:commandLink action="#{searchController.selectPage()}" styleClass="page-link"
+                                                   value="#{mainContent['pagination.previous']}">
+                                        <f:param name="page_number" value="#{searchController.selectedPageNumber - 1}"/>
+                                    </h:commandLink>
+                                </li>
+                                <ui:repeat value="#{searchController.pageNumbers}" var="pageNumber">
+                                    <li class="page-item #{pageNumber == searchController.selectedPageNumber ? 'active' : ''}">
+                                        <h:commandLink value="#{pageNumber}" styleClass="page-link"
+                                                       action="#{searchController.selectPage()}">
+                                            <f:param name="page_number" value="#{pageNumber}"/>
+                                        </h:commandLink>
+                                    </li>
+                                </ui:repeat>
+                                <li class="page-item #{searchController.selectedPageNumber + 1 > searchController.pageNumbers.size() ? 'disabled' : ''}">
+                                    <h:commandLink action="#{searchController.selectPage()}" styleClass="page-link"
+                                                   value="#{mainContent['pagination.next']}">
+                                        <f:param name="page_number" value="#{searchController.selectedPageNumber + 1}"/>
+                                    </h:commandLink>
+                                </li>
+                            </ul>
+                        </nav>
+                    </h:form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="table-responsive-xl">
+                    <h:dataTable value="#{searchController.currentBooksOnPage.entrySet().toArray()}" var="entryBook"
+                                 cellspacing="10px"
+                                 styleClass="table table-hover" columnClasses="col1, col2, col3">
+                        <h:column>
+                            <h:graphicImage value="/showImage?id=#{entryBook.key}" width="280px"/>
+                        </h:column>
+                        <h:column>
+                            <p>
+                                <h:outputLink value="#{request.contextPath}/pdfContent" target="_blank" styleClass="h5">
+                                    <h:outputText value="${entryBook.value.name}"/>
+                                    <f:param name="id" value="#{entryBook.key}"/>
+                                </h:outputLink>
+                            </p>
+                            <p>
+                                <strong>#{mainContent['book.pageCount']}:</strong> #{entryBook.value.pageCount}<br/>
+                                <strong>#{mainContent['book.genre']}:</strong> #{entryBook.value.genre}<br/>
+                                <strong>#{mainContent['book.author']}:</strong> #{entryBook.value.author}<br/>
+                                <strong>#{mainContent['book.publisher']}:</strong> #{entryBook.value.publisher}<br/>
+                                <strong>#{mainContent['book.publishYear']}:</strong> #{entryBook.value.publishDate}<br/>
+                                <strong>#{mainContent['book.isbn']}:</strong> #{entryBook.value.isbn}
+                            </p>
+                        </h:column>
+                        <h:column>
+                            <p><strong>#{mainContent['book.description']}</strong></p>
+                            <p>#{entryBook.value.description}</p>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </div>
+            <div class="row">
+                <h:form rendered="#{searchController.getTotalBooksCount() > searchController.booksOnPage}"
+                        style="width: 100%">
+                    <nav aria-label="Page navigation by books">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item #{searchController.selectedPageNumber - 1 == 0 ? 'disabled' : ''}">
+                                <h:commandLink action="#{searchController.selectPage()}" styleClass="page-link"
+                                               value="#{mainContent['pagination.previous']}">
+                                    <f:param name="page_number" value="#{searchController.selectedPageNumber - 1}"/>
+                                </h:commandLink>
+                            </li>
+                            <ui:repeat value="#{searchController.pageNumbers}" var="pageNumber">
+                                <li class="page-item #{pageNumber == searchController.selectedPageNumber ? 'active' : ''}">
+                                    <h:commandLink value="#{pageNumber}" styleClass="page-link"
+                                                   action="#{searchController.selectPage()}">
+                                        <f:param name="page_number" value="#{pageNumber}"/>
+                                    </h:commandLink>
+                                </li>
+                            </ui:repeat>
+                            <li class="page-item #{searchController.selectedPageNumber + 1 > searchController.pageNumbers.size() ? 'disabled' : ''}">
+                                <h:commandLink action="#{searchController.selectPage()}" styleClass="page-link"
+                                               value="#{mainContent['pagination.next']}">
+                                    <f:param name="page_number" value="#{searchController.selectedPageNumber + 1}"/>
+                                </h:commandLink>
+                            </li>
+                        </ul>
+                    </nav>
+                </h:form>
+            </div>
+        </div>
+    </main>
+</ui:composition>
+</html>

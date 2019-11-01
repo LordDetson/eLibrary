@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition>
+    <h:form rendered="#{searchController.getTotalBooksCount() > searchController.booksOnPage}" style="width: 100%">
+        <nav aria-label="Page navigation by books">
+            <ul class="pagination justify-content-center">
+                <li class="page-item #{searchController.selectedPageNumber - 1 == 0 ? 'disabled' : ''}">
+                    <h:commandLink action="#{searchController.selectPage()}" styleClass="page-link" value="#{mainContent['pagination.previous']}">
+                        <f:param name="page_number" value="#{searchController.selectedPageNumber - 1}"/>
+                    </h:commandLink>
+                </li>
+                <ui:repeat value="#{searchController.pageNumbers}" var="pageNumber">
+                    <li class="page-item #{pageNumber == searchController.selectedPageNumber ? 'active' : ''}">
+                        <h:commandLink value="#{pageNumber}" styleClass="page-link" action="#{searchController.selectPage()}">
+                            <f:param name="page_number" value="#{pageNumber}"/>
+                        </h:commandLink>
+                    </li>
+                </ui:repeat>
+                <li class="page-item #{searchController.selectedPageNumber + 1 > searchController.pageNumbers.size() ? 'disabled' : ''}">
+                    <h:commandLink action="#{searchController.selectPage()}" styleClass="page-link" value="#{mainContent['pagination.next']}">
+                        <f:param name="page_number" value="#{searchController.selectedPageNumber + 1}"/>
+                    </h:commandLink>
+                </li>
+            </ul>
+        </nav>
+    </h:form>
+</ui:composition>
+</html>

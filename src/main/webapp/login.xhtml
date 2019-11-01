@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/WEB-INF/include/template.xhtml">
+    <ui:define name="head">
+        <title>#{logonContent['page.login.title']}</title>
+        <h:outputStylesheet library="css" name="htmlBody.css"/>
+    </ui:define>
+    <ui:define name="body">
+        <div class="container" style="height: 100%">
+            <div class="row align-items-center" style="height: 100%">
+                <div class="col-sm">
+                </div>
+                <div class="col-sm-4 align-self-center">
+                    <div class="card bg-light">
+                        <div class="card-header">
+                            <h3 class="text-center">#{logonContent['form.login.title']}</h3>
+                        </div>
+                        <div class="card-body">
+                            <h:form>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">#{logonContent['form.login.username']}:</label>
+                                    <div class="col-sm">
+                                        <h:inputText id="username" value="#{user.username}" required="true"
+                                                     requiredMessage="#{logonContent['form.login.error.username.required']}"
+                                                     styleClass="form-control#{facesContext.validationFailed ? ' is-invalid' : ''}">
+                                            <f:validator validatorId="by.babanin.validator.UsernameIsNotStartWithNumber"/>
+                                            <f:validator validatorId="by.babanin.validator.UsernameLengthGt5"/>
+                                            <f:validator validatorId="by.babanin.validator.UsernameIsExist"/>
+                                        </h:inputText>
+                                        <div class="invalid-feedback">
+                                            <h:message for="username"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">#{logonContent['form.login.password']}:</label>
+                                    <div class="col-sm">
+                                        <h:inputSecret id="password" value="#{user.password}" required="true"
+                                                     requiredMessage="#{logonContent['form.login.error.password.required']}"
+                                                     styleClass="form-control#{facesContext.validationFailed ? ' is-invalid' : ''}">
+                                        </h:inputSecret>
+                                        <div class="invalid-feedback">
+                                            <h:message for="password"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-check">
+                                    <h:selectBooleanCheckbox id="remember-me-check" styleClass="form-check-input"/>
+                                    <label class="form-check-label">#{logonContent['form.login.input.checkbox.rememberme']}</label>
+                                </div>
+                                <h:commandButton action="#{loginController.login()}" styleClass="btn btn-primary mb-0"
+                                                 value="#{logonContent['form.login.input.buttonText']}"/>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm">
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>
