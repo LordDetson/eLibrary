@@ -9,6 +9,7 @@
     <ui:define name="head">
         <title>#{logonContent['page.login.title']}</title>
         <h:outputStylesheet library="css" name="htmlBody.css"/>
+        <h:outputScript library="js" name="loginFormValidation.js"/>
     </ui:define>
     <ui:define name="body">
         <div class="container" style="height: 100%">
@@ -54,7 +55,8 @@
                                     <label class="form-check-label">#{logonContent['form.login.input.checkbox.rememberme']}</label>
                                 </div>
                                 <h:commandButton action="#{loginController.login()}" styleClass="btn btn-primary mb-0"
-                                                 value="#{logonContent['form.login.input.buttonText']}"/>
+                                                 value="#{logonContent['form.login.input.buttonText']}"
+                                onclick="return checkIsNotEmptyUsername(this.form, '#{logonContent.error_username_required}')"/>
                             </h:form>
                         </div>
                     </div>
