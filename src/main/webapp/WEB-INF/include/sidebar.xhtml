@@ -15,9 +15,12 @@
                 <h:form>
                     <ui:repeat value="#{genreController.getAllGenreMap().entrySet().toArray()}" var="entryGenre">
                         <li class="nav-item">
-                            <h:commandLink action="#{searchController.fillBooksByGenre()}" value="#{entryGenre.value.name}"
+                            <h:commandLink value="#{entryGenre.value.name}"
                                            styleClass="nav-link #{searchController.currentSearch == entryGenre.value.name ? 'active' : ''}">
                                 <f:param name="genre_id" value="#{entryGenre.key}"/>
+                                <f:ajax event="click"
+                                        render="@form :current-search :search-symbol :books-count :pagination1 :books-table :pagination2"
+                                        listener="#{searchController.fillBooksByGenre()}" onevent="showProgress"/>
                             </h:commandLink>
                         </li>
                     </ui:repeat>
