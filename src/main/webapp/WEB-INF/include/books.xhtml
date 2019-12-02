@@ -39,8 +39,7 @@
                     <p><strong><h:outputText id="books-count" value="#{mainContent['book.count']}: #{searchController.getTotalBooksCount()}"/></strong></p>
                 </div>
                 <div class="col">
-                    <h:form id="pagination1" rendered="#{searchController.getTotalBooksCount() > searchController.booksOnPage}"
-                            style="width: 100%">
+                    <h:form id="pagination1" style="width: 100%">
                         <nav aria-label="Page navigation by books">
                             <ul class="pagination justify-content-end">
                                 <li class="page-item #{searchController.selectedPageNumber - 1 == 0 ? 'disabled' : ''}">
@@ -105,8 +104,7 @@
                 </div>
             </div>
             <div class="row">
-                <h:form id="pagination2" rendered="#{searchController.getTotalBooksCount() > searchController.booksOnPage}"
-                        style="width: 100%">
+                <h:form id="pagination2" style="width: 100%">
                     <nav aria-label="Page navigation by books">
                         <ul class="pagination justify-content-center">
                             <li class="page-item #{searchController.selectedPageNumber - 1 == 0 ? 'disabled' : ''}">
