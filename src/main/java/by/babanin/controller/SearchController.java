@@ -186,7 +186,7 @@ public class SearchController implements Serializable {
     }
 
     private void fillPageNumbers() {
-        int pageCount = getTotalBooksCount() > 0 ? getTotalBooksCount() / getBooksOnPage() : 0;
+        int pageCount = getTotalBooksCount() > 0 ? (int) Math.ceil((double) getTotalBooksCount() / getBooksOnPage()) : 0;
         AtomicInteger i = new AtomicInteger(1);
         pageNumbers = Stream.generate(i::getAndIncrement).limit(pageCount).collect(Collectors.toList());
     }
