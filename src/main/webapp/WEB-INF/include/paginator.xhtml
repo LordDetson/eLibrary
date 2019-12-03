@@ -6,24 +6,24 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition>
-    <h:form rendered="#{searchController.getTotalBooksCount() > searchController.booksOnPage}" style="width: 100%">
+    <h:form rendered="#{bookListController.getTotalBooksCount() > bookListController.booksOnPage}" style="width: 100%">
         <nav aria-label="Page navigation by books">
             <ul class="pagination justify-content-center">
-                <li class="page-item #{searchController.selectedPageNumber - 1 == 0 ? 'disabled' : ''}">
-                    <h:commandLink action="#{searchController.selectPage()}" styleClass="page-link" value="#{mainContent['pagination.previous']}">
-                        <f:param name="page_number" value="#{searchController.selectedPageNumber - 1}"/>
+                <li class="page-item #{bookListController.selectedPageNumber - 1 == 0 ? 'disabled' : ''}">
+                    <h:commandLink action="#{bookListController.selectPage()}" styleClass="page-link" value="#{mainContent['pagination.previous']}">
+                        <f:param name="page_number" value="#{bookListController.selectedPageNumber - 1}"/>
                     </h:commandLink>
                 </li>
-                <ui:repeat value="#{searchController.pageNumbers}" var="pageNumber">
-                    <li class="page-item #{pageNumber == searchController.selectedPageNumber ? 'active' : ''}">
-                        <h:commandLink value="#{pageNumber}" styleClass="page-link" action="#{searchController.selectPage()}">
+                <ui:repeat value="#{bookListController.pageNumbers}" var="pageNumber">
+                    <li class="page-item #{pageNumber == bookListController.selectedPageNumber ? 'active' : ''}">
+                        <h:commandLink value="#{pageNumber}" styleClass="page-link" action="#{bookListController.selectPage()}">
                             <f:param name="page_number" value="#{pageNumber}"/>
                         </h:commandLink>
                     </li>
                 </ui:repeat>
-                <li class="page-item #{searchController.selectedPageNumber + 1 > searchController.pageNumbers.size() ? 'disabled' : ''}">
-                    <h:commandLink action="#{searchController.selectPage()}" styleClass="page-link" value="#{mainContent['pagination.next']}">
-                        <f:param name="page_number" value="#{searchController.selectedPageNumber + 1}"/>
+                <li class="page-item #{bookListController.selectedPageNumber + 1 > bookListController.pageNumbers.size() ? 'disabled' : ''}">
+                    <h:commandLink action="#{bookListController.selectPage()}" styleClass="page-link" value="#{mainContent['pagination.next']}">
+                        <f:param name="page_number" value="#{bookListController.selectedPageNumber + 1}"/>
                     </h:commandLink>
                 </li>
             </ul>

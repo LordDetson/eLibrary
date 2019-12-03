@@ -3,7 +3,6 @@ package by.babanin.controller;
 import by.babanin.controller.enums.SearchType;
 import by.babanin.dao.repository.BookContentRepository;
 import by.babanin.model.Book;
-import by.babanin.nls.MainContent;
 import by.babanin.service.AuthorService;
 import by.babanin.service.BookService;
 import by.babanin.service.GenreService;
@@ -12,15 +11,17 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import java.io.Serializable;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @ManagedBean
 @SessionScoped
-public class SearchController implements Serializable {
+public class BookListController implements Serializable {
     @ManagedProperty("#{genreController}")
     private GenreController genreController;
 
@@ -33,13 +34,7 @@ public class SearchController implements Serializable {
     private List<Integer> pageNumbers;
     private int selectedPageNumber;
 
-    private static Map<String, SearchType> searchTypeMap = new HashMap<>();
-    static {
-        Arrays.stream(SearchType.values()).forEach(searchType ->
-                searchTypeMap.put(MainContent.getInstance().getString(searchType.getKey()), searchType));
-    }
-
-    public SearchController() {
+    public BookListController() {
         currentSearch = GenreService.getGenreById(GenreService.DEFAULT_GENRE_ID).getName();
         fillCurrentBooks(BookService.getBookMapByGenreId(GenreService.DEFAULT_GENRE_ID));
     }
@@ -100,14 +95,6 @@ public class SearchController implements Serializable {
 
     public void setGenreController(GenreController genreController) {
         this.genreController = genreController;
-    }
-
-    public static Map<String, SearchType> getSearchTypeMap() {
-        return searchTypeMap;
-    }
-
-    public static void setSearchTypeMap(Map<String, SearchType> searchTypeMap) {
-        SearchController.searchTypeMap = searchTypeMap;
     }
 
     public SearchType getCurrentSearchType() {
@@ -174,8 +161,12 @@ public class SearchController implements Serializable {
         this.selectedPageNumber = selectedPageNumber;
     }
 
-    private static void fillSearchTypeMap() {
+    public void changeSearchType(ValueChangeEvent event) {
+        setCurrentSearchType((SearchType) event.getNewValue());
+    }
 
+    public void changePattern(ValueChangeEvent event) {
+        setPattern((String) event.getNewValue());
     }
 
     private void fillCurrentBooks(Map<Long, Book> bookMap) {

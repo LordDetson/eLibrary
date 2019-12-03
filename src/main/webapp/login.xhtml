@@ -28,7 +28,8 @@
                                         <h:inputText id="username" value="#{user.username}" required="true"
                                                      requiredMessage="#{logonContent['form.login.error.username.required']}"
                                                      styleClass="form-control#{facesContext.validationFailed ? ' is-invalid' : ''}">
-                                            <f:validator validatorId="by.babanin.validator.UsernameIsNotStartWithNumber"/>
+                                            <f:validator
+                                                    validatorId="by.babanin.validator.UsernameIsNotStartWithNumber"/>
                                             <f:validator validatorId="by.babanin.validator.UsernameLengthGt5"/>
                                             <f:validator validatorId="by.babanin.validator.UsernameIsExist"/>
                                             <f:ajax event="blur" render="usernameError username"/>
@@ -42,8 +43,8 @@
                                     <label class="col-sm-4 col-form-label">#{logonContent['form.login.password']}:</label>
                                     <div class="col-sm">
                                         <h:inputSecret id="password" value="#{user.password}" required="true"
-                                                     requiredMessage="#{logonContent['form.login.error.password.required']}"
-                                                     styleClass="form-control#{facesContext.validationFailed ? ' is-invalid' : ''}">
+                                                       requiredMessage="#{logonContent['form.login.error.password.required']}"
+                                                       styleClass="form-control#{facesContext.validationFailed ? ' is-invalid' : ''}">
                                         </h:inputSecret>
                                         <div class="invalid-feedback">
                                             <h:message id="passwordError" for="password"/>
@@ -57,6 +58,21 @@
                                 <h:commandButton action="#{loginController.login()}" styleClass="btn btn-primary mb-0"
                                                  value="#{logonContent['form.login.input.buttonText']}"/>
                             </h:form>
+                            <div class="dropdown text-right">
+                                <a class="nav-link dropdown-toggle m-2 m-md-0" href="#" id="langDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">#{mainContent[localeChanger.getKeyLangContent()]}</a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="langDropdown">
+                                    <h:form>
+                                        <h:commandLink action="#{localeChanger.changeLocale('en', 'US')}"
+                                                       styleClass="dropdown-item #{localeChanger.getKeyLangContent() == 'lang.en' ? 'active' : ''}"
+                                                       value="#{mainContent['lang.en']}"/>
+                                        <h:commandLink action="#{localeChanger.changeLocale('ru', 'RU')}"
+                                                       styleClass="dropdown-item #{localeChanger.getKeyLangContent() == 'lang.ru' ? 'active' : ''}"
+                                                       value="#{mainContent['lang.ru']}"/>
+                                    </h:form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

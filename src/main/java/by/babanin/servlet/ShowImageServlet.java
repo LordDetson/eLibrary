@@ -1,6 +1,6 @@
 package by.babanin.servlet;
 
-import by.babanin.controller.SearchController;
+import by.babanin.controller.BookListController;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -15,8 +15,8 @@ public class ShowImageServlet extends HttpServlet {
         try (ServletOutputStream outputStream = response.getOutputStream()) {
             response.setContentType("image/jpeg");
             Long bookId = Long.valueOf(request.getParameter("id"));
-            SearchController searchController = (SearchController) request.getSession(false).getAttribute("searchController");
-            byte[] image = searchController.getBookImage(bookId);
+            BookListController bookListController = (BookListController) request.getSession(false).getAttribute("bookListController");
+            byte[] image = bookListController.getBookImage(bookId);
             response.setContentLength(image.length);
             outputStream.write(image);
         } catch (IOException e) {

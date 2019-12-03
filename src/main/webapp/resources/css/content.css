@@ -37,6 +37,11 @@
     display: none;
 }
 
+.lang-icon {
+    width: 25px;
+    height: 15px;
+}
+
 @media (min-width: 768px) {
     [role="main"] {
         padding-top: 48px; /* Space for fixed navbar */

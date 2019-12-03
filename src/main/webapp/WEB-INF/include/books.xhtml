@@ -9,7 +9,7 @@
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">
-                <h:outputText id="current-search" value="#{searchController.currentSearch}"/>
+                <h:outputText id="current-search" value="#{bookListController.currentSearch}"/>
             </h1>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
@@ -25,8 +25,8 @@
             <h:form id="search-symbol">
                 <nav class="nav nav-pills justify-content-center">
                     <ui:repeat value="#{symbolsController.getCharsRu()}" var="char">
-                        <h:commandLink action="#{searchController.fillBooksByFirstSymbol()}" value="#{char}"
-                                       styleClass="nav-link #{searchController.currentSearch == char ? 'active':''}">
+                        <h:commandLink action="#{bookListController.fillBooksByFirstSymbol()}" value="#{char}"
+                                       styleClass="nav-link #{bookListController.currentSearch == char ? 'active':''}">
                             <f:param name="search_symbol" value="#{char}"/>
                         </h:commandLink>
                     </ui:repeat>
@@ -36,30 +36,30 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
-                    <p><strong><h:outputText id="books-count" value="#{mainContent['book.count']}: #{searchController.getTotalBooksCount()}"/></strong></p>
+                    <p><strong><h:outputText id="books-count" value="#{mainContent['book.count']}: #{bookListController.getTotalBooksCount()}"/></strong></p>
                 </div>
                 <div class="col">
                     <h:form id="pagination1" style="width: 100%">
                         <nav aria-label="Page navigation by books">
                             <ul class="pagination justify-content-end">
-                                <li class="page-item #{searchController.selectedPageNumber - 1 == 0 ? 'disabled' : ''}">
-                                    <h:commandLink action="#{searchController.selectPage()}" styleClass="page-link"
+                                <li class="page-item #{bookListController.selectedPageNumber - 1 == 0 ? 'disabled' : ''}">
+                                    <h:commandLink action="#{bookListController.selectPage()}" styleClass="page-link"
                                                    value="#{mainContent['pagination.previous']}">
-                                        <f:param name="page_number" value="#{searchController.selectedPageNumber - 1}"/>
+                                        <f:param name="page_number" value="#{bookListController.selectedPageNumber - 1}"/>
                                     </h:commandLink>
                                 </li>
-                                <ui:repeat value="#{searchController.pageNumbers}" var="pageNumber">
-                                    <li class="page-item #{pageNumber == searchController.selectedPageNumber ? 'active' : ''}">
+                                <ui:repeat value="#{bookListController.pageNumbers}" var="pageNumber">
+                                    <li class="page-item #{pageNumber == bookListController.selectedPageNumber ? 'active' : ''}">
                                         <h:commandLink value="#{pageNumber}" styleClass="page-link"
-                                                       action="#{searchController.selectPage()}">
+                                                       action="#{bookListController.selectPage()}">
                                             <f:param name="page_number" value="#{pageNumber}"/>
                                         </h:commandLink>
                                     </li>
                                 </ui:repeat>
-                                <li class="page-item #{searchController.selectedPageNumber + 1 > searchController.pageNumbers.size() ? 'disabled' : ''}">
-                                    <h:commandLink action="#{searchController.selectPage()}" styleClass="page-link"
+                                <li class="page-item #{bookListController.selectedPageNumber + 1 > bookListController.pageNumbers.size() ? 'disabled' : ''}">
+                                    <h:commandLink action="#{bookListController.selectPage()}" styleClass="page-link"
                                                    value="#{mainContent['pagination.next']}">
-                                        <f:param name="page_number" value="#{searchController.selectedPageNumber + 1}"/>
+                                        <f:param name="page_number" value="#{bookListController.selectedPageNumber + 1}"/>
                                     </h:commandLink>
                                 </li>
                             </ul>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div id="books-table-wrapper" class="table-responsive-xl">
-                    <h:dataTable id="books-table" value="#{searchController.currentBooksOnPage.entrySet().toArray()}" var="entryBook"
+                    <h:dataTable id="books-table" value="#{bookListController.currentBooksOnPage.entrySet().toArray()}" var="entryBook"
                                  cellspacing="10px"
                                  styleClass="table table-hover" columnClasses="col1, col2, col3">
                         <h:column>
@@ -107,24 +107,24 @@
                 <h:form id="pagination2" style="width: 100%">
                     <nav aria-label="Page navigation by books">
                         <ul class="pagination justify-content-center">
-                            <li class="page-item #{searchController.selectedPageNumber - 1 == 0 ? 'disabled' : ''}">
-                                <h:commandLink action="#{searchController.selectPage()}" styleClass="page-link"
+                            <li class="page-item #{bookListController.selectedPageNumber - 1 == 0 ? 'disabled' : ''}">
+                                <h:commandLink action="#{bookListController.selectPage()}" styleClass="page-link"
                                                value="#{mainContent['pagination.previous']}">
-                                    <f:param name="page_number" value="#{searchController.selectedPageNumber - 1}"/>
+                                    <f:param name="page_number" value="#{bookListController.selectedPageNumber - 1}"/>
                                 </h:commandLink>
                             </li>
-                            <ui:repeat value="#{searchController.pageNumbers}" var="pageNumber">
-                                <li class="page-item #{pageNumber == searchController.selectedPageNumber ? 'active' : ''}">
+                            <ui:repeat value="#{bookListController.pageNumbers}" var="pageNumber">
+                                <li class="page-item #{pageNumber == bookListController.selectedPageNumber ? 'active' : ''}">
                                     <h:commandLink value="#{pageNumber}" styleClass="page-link"
-                                                   action="#{searchController.selectPage()}">
+                                                   action="#{bookListController.selectPage()}">
                                         <f:param name="page_number" value="#{pageNumber}"/>
                                     </h:commandLink>
                                 </li>
                             </ui:repeat>
-                            <li class="page-item #{searchController.selectedPageNumber + 1 > searchController.pageNumbers.size() ? 'disabled' : ''}">
-                                <h:commandLink action="#{searchController.selectPage()}" styleClass="page-link"
+                            <li class="page-item #{bookListController.selectedPageNumber + 1 > bookListController.pageNumbers.size() ? 'disabled' : ''}">
+                                <h:commandLink action="#{bookListController.selectPage()}" styleClass="page-link"
                                                value="#{mainContent['pagination.next']}">
-                                    <f:param name="page_number" value="#{searchController.selectedPageNumber + 1}"/>
+                                    <f:param name="page_number" value="#{bookListController.selectedPageNumber + 1}"/>
                                 </h:commandLink>
                             </li>
                         </ul>

@@ -1,6 +1,6 @@
 package by.babanin.servlet;
 
-import by.babanin.controller.SearchController;
+import by.babanin.controller.BookListController;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -15,8 +15,8 @@ public class PdfContent extends HttpServlet {
         resp.setContentType("application/pdf");
         ServletOutputStream os = resp.getOutputStream();
         Long bookId = Long.valueOf(req.getParameter("id"));
-        SearchController searchController = (SearchController) req.getSession(false).getAttribute("searchController");
-        byte[] contentBook = searchController.getBookContent(bookId);
+        BookListController bookListController = (BookListController) req.getSession(false).getAttribute("bookListController");
+        byte[] contentBook = bookListController.getBookContent(bookId);
         resp.setContentLength(contentBook.length);
         os.write(contentBook);
     }
