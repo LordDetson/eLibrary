@@ -22,12 +22,8 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
-        <servlet-name>ShowImageServlet</servlet-name>
-        <servlet-class>by.babanin.servlet.ShowImageServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>PdfServlet</servlet-name>
-        <servlet-class>by.babanin.servlet.PdfContent</servlet-class>
+        <servlet-name>BookContextServlet</servlet-name>
+        <servlet-class>by.babanin.servlet.BookContextServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
@@ -38,12 +34,8 @@
         <url-pattern>/javax.faces.resource/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ShowImageServlet</servlet-name>
-        <url-pattern>/showImage</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PdfServlet</servlet-name>
-        <url-pattern>/pdfContent</url-pattern>
+        <servlet-name>BookContextServlet</servlet-name>
+        <url-pattern>/bookContext</url-pattern>
     </servlet-mapping>
 
     <mime-mapping>

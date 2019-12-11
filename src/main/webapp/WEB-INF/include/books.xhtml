@@ -78,13 +78,14 @@
                                  cellspacing="10px"
                                  styleClass="table table-hover" columnClasses="col1, col2, col3">
                         <h:column>
-                            <h:graphicImage value="/showImage?id=#{entryBook.key}" width="280px"/>
+                            <h:graphicImage value="/bookContext?id=#{entryBook.key}&amp;action=show_image" width="280px"/>
                         </h:column>
                         <h:column>
                             <p>
-                                <h:outputLink value="#{request.contextPath}/pdfContent" target="_blank" styleClass="h5">
+                                <h:outputLink value="#{request.contextPath}/bookContext" target="_blank" styleClass="h5">
                                     <h:outputText value="${entryBook.value.name}"/>
                                     <f:param name="id" value="#{entryBook.key}"/>
+                                    <f:param name="action" value="read_pdf"/>
                                 </h:outputLink>
                             </p>
                             <p>
@@ -93,7 +94,12 @@
                                 <strong>#{mainContent['book.author']}:</strong> #{entryBook.value.author}<br/>
                                 <strong>#{mainContent['book.publisher']}:</strong> #{entryBook.value.publisher}<br/>
                                 <strong>#{mainContent['book.publishYear']}:</strong> #{entryBook.value.publishDate}<br/>
-                                <strong>#{mainContent['book.isbn']}:</strong> #{entryBook.value.isbn}
+                                <strong>#{mainContent['book.isbn']}:</strong> #{entryBook.value.isbn}<br/>
+                                <h:outputLink value="#{request.contextPath}/bookContext" target="_blank">
+                                    <ui:include src="downloadPdfSvg.xhtml"/>
+                                    <f:param name="id" value="#{entryBook.key}"/>
+                                    <f:param name="action" value="save_pdf"/>
+                                </h:outputLink>
                             </p>
                         </h:column>
                         <h:column>
