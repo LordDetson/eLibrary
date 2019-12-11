@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition>
+    <a class="nav-link dropdown-toggle m-2 m-md-0" href="#" id="langDropdown" role="button"
+       data-toggle="dropdown" aria-haspopup="true"
+       aria-expanded="false">#{mainContent[localeChanger.getKeyLangContent()]}</a>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="langDropdown">
+        <h:form>
+            <h:commandLink action="#{localeChanger.changeLocale('en', 'US')}"
+                           styleClass="dropdown-item #{localeChanger.getKeyLangContent() == 'lang.en' ? 'active' : ''}"
+                           value="#{mainContent['lang.en']}"/>
+            <h:commandLink action="#{localeChanger.changeLocale('ru', 'RU')}"
+                           styleClass="dropdown-item #{localeChanger.getKeyLangContent() == 'lang.ru' ? 'active' : ''}"
+                           value="#{mainContent['lang.ru']}"/>
+        </h:form>
+    </div>
+</ui:composition>
+</html>
