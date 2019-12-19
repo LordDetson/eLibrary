@@ -12,7 +12,7 @@
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                     <span>#{mainContent['sitebar.listOfGenres']}</span>
                 </h6>
-                <h:form>
+                <h:form id="sidebar">
                     <ui:repeat value="#{genreController.getAllGenreMap().entrySet().toArray()}" var="entryGenre">
                         <li class="nav-item">
                             <h:commandLink value="#{entryGenre.value.name}"

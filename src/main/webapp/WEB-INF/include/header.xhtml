@@ -33,9 +33,12 @@
                         </h:selectOneMenu>
                     </div>
                     <div class="col-md-1">
-                        <h:commandButton action="#{bookListController.fillBooksByPattern()}"
-                                         styleClass="btn btn-outline-info m-2 ml-md-0 mr-md-3 my-md-0"
-                                         value="#{mainContent['form.search.buttonText']}"/>
+                        <h:commandButton styleClass="btn btn-outline-info m-2 ml-md-0 mr-md-3 my-md-0"
+                                         value="#{mainContent['form.search.buttonText']}">
+                            <f:ajax event="click"
+                                    render="@form :current-search :search-symbol :books-count :pagination1 :books-table :pagination2 :sidebar"
+                                    listener="#{bookListController.fillBooksByPattern()}" onevent="showProgress"/>
+                        </h:commandButton>
                     </div>
                 </div>
             </h:form>

@@ -25,9 +25,12 @@
             <h:form id="search-symbol">
                 <nav class="nav nav-pills justify-content-center">
                     <ui:repeat value="#{symbolsController.getCharsRu()}" var="char">
-                        <h:commandLink action="#{bookListController.fillBooksByFirstSymbol()}" value="#{char}"
+                        <h:commandLink value="#{char}"
                                        styleClass="nav-link #{bookListController.currentSearch == char ? 'active':''}">
                             <f:param name="search_symbol" value="#{char}"/>
+                            <f:ajax event="click"
+                                    render="@form :current-search :sidebar :books-count :pagination1 :books-table :pagination2"
+                                    listener="#{bookListController.fillBooksByFirstSymbol()}" onevent="showProgress"/>
                         </h:commandLink>
                     </ui:repeat>
                 </nav>
@@ -43,23 +46,31 @@
                         <nav aria-label="Page navigation by books">
                             <ul class="pagination justify-content-end">
                                 <li class="page-item #{bookListController.selectedPageNumber - 1 == 0 ? 'disabled' : ''}">
-                                    <h:commandLink action="#{bookListController.selectPage()}" styleClass="page-link"
+                                    <h:commandLink styleClass="page-link"
                                                    value="#{mainContent['pagination.previous']}">
                                         <f:param name="page_number" value="#{bookListController.selectedPageNumber - 1}"/>
+                                        <f:ajax event="click"
+                                                render="@form :current-search :search-symbol :books-count :sidebar :books-table :pagination2"
+                                                listener="#{bookListController.selectPage()}" onevent="showProgress"/>
                                     </h:commandLink>
                                 </li>
                                 <ui:repeat value="#{bookListController.pageNumbers}" var="pageNumber">
                                     <li class="page-item #{pageNumber == bookListController.selectedPageNumber ? 'active' : ''}">
-                                        <h:commandLink value="#{pageNumber}" styleClass="page-link"
-                                                       action="#{bookListController.selectPage()}">
+                                        <h:commandLink value="#{pageNumber}" styleClass="page-link">
                                             <f:param name="page_number" value="#{pageNumber}"/>
+                                            <f:ajax event="click"
+                                                    render="@form :current-search :search-symbol :books-count :sidebar :books-table :pagination2"
+                                                    listener="#{bookListController.selectPage()}" onevent="showProgress"/>
                                         </h:commandLink>
                                     </li>
                                 </ui:repeat>
                                 <li class="page-item #{bookListController.selectedPageNumber + 1 > bookListController.pageNumbers.size() ? 'disabled' : ''}">
-                                    <h:commandLink action="#{bookListController.selectPage()}" styleClass="page-link"
+                                    <h:commandLink styleClass="page-link"
                                                    value="#{mainContent['pagination.next']}">
                                         <f:param name="page_number" value="#{bookListController.selectedPageNumber + 1}"/>
+                                        <f:ajax event="click"
+                                                render="@form :current-search :search-symbol :books-count :sidebar :books-table :pagination2"
+                                                listener="#{bookListController.selectPage()}" onevent="showProgress"/>
                                     </h:commandLink>
                                 </li>
                             </ul>
@@ -114,23 +125,31 @@
                     <nav aria-label="Page navigation by books">
                         <ul class="pagination justify-content-center">
                             <li class="page-item #{bookListController.selectedPageNumber - 1 == 0 ? 'disabled' : ''}">
-                                <h:commandLink action="#{bookListController.selectPage()}" styleClass="page-link"
+                                <h:commandLink styleClass="page-link"
                                                value="#{mainContent['pagination.previous']}">
                                     <f:param name="page_number" value="#{bookListController.selectedPageNumber - 1}"/>
+                                    <f:ajax event="click"
+                                            render="@form :current-search :search-symbol :books-count :pagination1 :books-table :sidebar"
+                                            listener="#{bookListController.selectPage()}" onevent="showProgress"/>
                                 </h:commandLink>
                             </li>
                             <ui:repeat value="#{bookListController.pageNumbers}" var="pageNumber">
                                 <li class="page-item #{pageNumber == bookListController.selectedPageNumber ? 'active' : ''}">
-                                    <h:commandLink value="#{pageNumber}" styleClass="page-link"
-                                                   action="#{bookListController.selectPage()}">
+                                    <h:commandLink value="#{pageNumber}" styleClass="page-link">
                                         <f:param name="page_number" value="#{pageNumber}"/>
+                                        <f:ajax event="click"
+                                                render="@form :current-search :search-symbol :books-count :pagination1 :books-table :sidebar"
+                                                listener="#{bookListController.selectPage()}" onevent="showProgress"/>
                                     </h:commandLink>
                                 </li>
                             </ui:repeat>
                             <li class="page-item #{bookListController.selectedPageNumber + 1 > bookListController.pageNumbers.size() ? 'disabled' : ''}">
-                                <h:commandLink action="#{bookListController.selectPage()}" styleClass="page-link"
+                                <h:commandLink styleClass="page-link"
                                                value="#{mainContent['pagination.next']}">
                                     <f:param name="page_number" value="#{bookListController.selectedPageNumber + 1}"/>
+                                    <f:ajax event="click"
+                                            render="@form :current-search :search-symbol :books-count :pagination1 :books-table :sidebar"
+                                            listener="#{bookListController.selectPage()}" onevent="showProgress"/>
                                 </h:commandLink>
                             </li>
                         </ul>
